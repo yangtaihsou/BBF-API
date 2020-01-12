@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.esb.bbf.console.dao.AppInfoMapper">
+
+    <!--保存数据-->
+    <insert id="save" parameterType="com.esb.bbf.console.domain.AppInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO  appinfo
+        (
+        <include refid="Base_Column_List_WithOutPk"/>
+        )
+        VALUES
+        (
+        <include refid="Javabean_Column_List_WithOutPk"/>
+        )
+    </insert>
+
+    <!--根据主键id，更新appInfo表相应数据-->
+    <update id="updateByPrimaryKey" parameterType="com.esb.bbf.console.domain.AppInfo">
+        UPDATE  appinfo
+        <set>
+            <include refid="updateSetSql"/>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <!--根据主键id，查找appInfo表的唯一数据-->
+    <select id="queryByPrimaryKey" parameterType="java.lang.Long" resultType="com.esb.bbf.console.domain.AppInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM  appinfo where id = #{id}
+    </select>
+
+    <!--根据条件，查找appInfo表相应数据-->
+    <select id="queryBySelective" resultType="com.esb.bbf.console.domain.AppInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM  appinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereQuerySelectiveSql"/>
+        </trim>
+    </select>
+
+    <!--根据条件，查找appInfo表相应数据的总量-->
+    <select id="queryCountBySelective" resultType="java.lang.Long">
+        SELECT
+        count(id )
+        FROM  appinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereSelectiveSql"/>
+        </trim>
+    </select>
+
+
+    <!--根据条件，分页查找appInfo表相应数据-->
+    <select id="queryBySelectiveForPagination" parameterType="com.esb.bbf.console.domain.AppInfo" resultType="com.esb.bbf.console.domain.AppInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM  appinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereQuerySelectiveSql"/>
+        </trim>
+        order by id desc
+        LIMIT #{startRow} , #{pageSize}
+    </select>
+
+
+    <!--start:根据唯一索引进行查找和更新,appInfo表-->
+    <select id="queryByAppId" parameterType="java.lang.String" resultType="com.esb.bbf.console.domain.AppInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM  appinfo WHERE appId=#{appId}
+    </select>
+
+    <update id="updateByAppId" parameterType="com.esb.bbf.console.domain.AppInfo">
+        UPDATE  appinfo
+        <set>
+            <include refid="updateSetSql"/>
+        </set>
+        WHERE appId=#{appId}
+    </update>
+    <!--end:根据唯一索引进行查找和更新,appInfo表-->
+
+    <!--appInfo表所有字段-->
+    <sql id="Base_Column_List">
+        id ,    <!---->
+        appId ,    <!--app编号-->
+        appName ,    <!--名字-->
+        appPath ,    <!--路径-->
+        checkPara ,    <!--检查配置-->
+        appPara ,    <!--参数-->
+        action ,    <!--post|get等-->
+        remark ,    <!--备注-->
+        version ,    <!--版本-->
+        userId ,    <!--配置人id-->
+        userName ,    <!--配置人名字-->
+        systemCode ,    <!--系统编码-->
+        systemName ,    <!--系统名字-->
+        status ,    <!--状态-->
+        userIds ,    <!--可访问用户id-->
+        lastModifyUser ,    <!--最后修改用户名字-->
+        ext1 ,    <!--扩展字段1-->
+        ext2 ,    <!--扩展字段2-->
+        updateDate ,    <!--更新时间-->
+        createdDate      <!--创建时间-->
+    </sql>
+
+    <!--appInfo表除了自增长的所有字段-->
+    <sql id="Base_Column_List_WithOutPk">
+        appId ,   <!--app编号-->
+        appName ,   <!--名字-->
+        appPath ,   <!--路径-->
+        checkPara ,   <!--检查配置-->
+        appPara ,   <!--参数-->
+        action ,   <!--post|get等-->
+        remark ,   <!--备注-->
+        version ,   <!--版本-->
+        userId ,   <!--配置人id-->
+        userName ,   <!--配置人名字-->
+        systemCode ,   <!--系统编码-->
+        systemName ,   <!--系统名字-->
+        status ,   <!--状态-->
+        userIds ,   <!--可访问用户id-->
+        lastModifyUser ,   <!--最后修改用户名字-->
+        ext1 ,   <!--扩展字段1-->
+        ext2 ,   <!--扩展字段2-->
+        updateDate ,   <!--更新时间-->
+        createdDate         <!--创建时间-->
+    </sql>
+
+    <!--javabean除了自增长的所有字段-->
+    <sql id="Javabean_Column_List_WithOutPk">
+        #{appId} ,                     <!--app编号-->
+        #{appName} ,                     <!--名字-->
+        #{appPath} ,                     <!--路径-->
+        #{checkPara} ,                     <!--检查配置-->
+        #{appPara} ,                     <!--参数-->
+        #{action} ,                     <!--post|get等-->
+        #{remark} ,                     <!--备注-->
+        #{version} ,                     <!--版本-->
+        #{userId} ,                     <!--配置人id-->
+        #{userName} ,                     <!--配置人名字-->
+        #{systemCode} ,                     <!--系统编码-->
+        #{systemName} ,                     <!--系统名字-->
+        #{status} ,                     <!--状态-->
+        #{userIds} ,                     <!--可访问用户id-->
+        #{lastModifyUser} ,                     <!--最后修改用户名字-->
+        #{ext1} ,                     <!--扩展字段1-->
+        #{ext2} ,                     <!--扩展字段2-->
+        #{updateDate} ,                     <!--更新时间-->
+        #{createdDate}                      <!--创建时间-->
+    </sql>
+
+
+    <sql id="updateSetSql">
+        <if test="id != null">
+            id=#{id},
+        </if>
+        <if test="appId != null">
+            appId=#{appId},
+        </if>
+        <if test="appName != null">
+            appName=#{appName},
+        </if>
+        <if test="appPath != null">
+            appPath=#{appPath},
+        </if>
+        <if test="checkPara != null">
+            checkPara=#{checkPara},
+        </if>
+        <if test="appPara != null">
+            appPara=#{appPara},
+        </if>
+        <if test="action != null">
+            action=#{action},
+        </if>
+        <if test="remark != null">
+            remark=#{remark},
+        </if>
+        <if test="version != null">
+            version=#{version},
+        </if>
+        <if test="userId != null">
+            userId=#{userId},
+        </if>
+        <if test="userName != null">
+            userName=#{userName},
+        </if>
+        <if test="systemCode != null">
+            systemCode=#{systemCode},
+        </if>
+        <if test="systemName != null">
+            systemName=#{systemName},
+        </if>
+        <if test="status != null">
+            status=#{status},
+        </if>
+        <if test="userIds != null">
+            userIds=#{userIds},
+        </if>
+        <if test="lastModifyUser != null">
+            lastModifyUser=#{lastModifyUser},
+        </if>
+        <if test="ext1 != null">
+            ext1=#{ext1},
+        </if>
+        <if test="ext2 != null">
+            ext2=#{ext2},
+        </if>
+        <if test="updateDate != null">
+            updateDate=#{updateDate},
+        </if>
+        <if test="createdDate != null">
+            createdDate=#{createdDate},
+        </if>
+    </sql>
+
+
+    <sql id="whereQuerySelectiveSql">
+        <if test="query!= null">
+            <if test="query.id != null">
+                AND id = #{query.id}
+            </if>
+
+            <if test="query.appId != null and query.appId!=''">
+                AND appId = #{query.appId}
+            </if>
+
+            <if test="query.appName != null and query.appName!=''">
+                AND appName = #{query.appName}
+            </if>
+
+            <if test="query.appPath != null and query.appPath!=''">
+                AND appPath = #{query.appPath}
+            </if>
+
+            <if test="query.checkPara != null">
+                AND checkPara = #{query.checkPara}
+            </if>
+
+            <if test="query.appPara != null">
+                AND appPara = #{query.appPara}
+            </if>
+
+            <if test="query.action != null and query.action!=''">
+                AND action = #{query.action}
+            </if>
+
+            <if test="query.remark != null and query.remark!=''">
+                AND remark = #{query.remark}
+            </if>
+
+            <if test="query.version != null and query.version!=''">
+                AND version = #{query.version}
+            </if>
+
+            <if test="query.userId != null and query.userId!=''">
+                AND userId = #{query.userId}
+            </if>
+
+            <if test="query.userName != null and query.userName!=''">
+                AND userName = #{query.userName}
+            </if>
+
+            <if test="query.systemCode != null and query.systemCode!=''">
+                AND systemCode = #{query.systemCode}
+            </if>
+
+            <if test="query.systemName != null and query.systemName!=''">
+                AND systemName = #{query.systemName}
+            </if>
+
+            <if test="query.status != null">
+                AND status = #{query.status}
+            </if>
+
+            <if test="query.userIds != null">
+                AND userIds like CONCAT('%',#{query.userIds},'%')
+            </if>
+
+            <if test="query.lastModifyUser != null and query.lastModifyUser!=''">
+                AND lastModifyUser = #{query.lastModifyUser}
+            </if>
+
+            <if test="query.ext1 != null and query.ext1!=''">
+                AND ext1 = #{query.ext1}
+            </if>
+
+            <if test="query.ext2 != null and query.ext2!=''">
+                AND ext2 = #{query.ext2}
+            </if>
+
+            <if test="query.updateDate != null">
+                AND updateDate = #{query.updateDate}
+            </if>
+
+            <if test="query.createdDate != null">
+                AND createdDate = #{query.createdDate}
+            </if>
+
+        </if>
+    </sql>
+
+    <sql id="whereSelectiveSql">
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="appId != null and appId!=''">
+            AND appId = #{appId}
+        </if>
+        <if test="appName != null and appName!=''">
+            AND appName = #{appName}
+        </if>
+        <if test="appPath != null and appPath!=''">
+            AND appPath = #{appPath}
+        </if>
+        <if test="checkPara != null">
+            AND checkPara = #{checkPara}
+        </if>
+        <if test="appPara != null">
+            AND appPara = #{appPara}
+        </if>
+        <if test="action != null and action!=''">
+            AND action = #{action}
+        </if>
+        <if test="remark != null and remark!=''">
+            AND remark = #{remark}
+        </if>
+        <if test="version != null and version!=''">
+            AND version = #{version}
+        </if>
+        <if test="userId != null and userId!=''">
+            AND userId = #{userId}
+        </if>
+        <if test="userName != null and userName!=''">
+            AND userName = #{userName}
+        </if>
+        <if test="systemCode != null and systemCode!=''">
+            AND systemCode = #{systemCode}
+        </if>
+        <if test="systemName != null and systemName!=''">
+            AND systemName = #{systemName}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        <if test="userIds != null">
+            AND userIds like   CONCAT('%',#{userIds},'%')
+        </if>
+        <if test="lastModifyUser != null and lastModifyUser!=''">
+            AND lastModifyUser = #{lastModifyUser}
+        </if>
+        <if test="ext1 != null and ext1!=''">
+            AND ext1 = #{ext1}
+        </if>
+        <if test="ext2 != null and ext2!=''">
+            AND ext2 = #{ext2}
+        </if>
+        <if test="updateDate != null">
+            AND updateDate = #{updateDate}
+        </if>
+        <if test="createdDate != null">
+            AND createdDate = #{createdDate}
+        </if>
+    </sql>
+</mapper>

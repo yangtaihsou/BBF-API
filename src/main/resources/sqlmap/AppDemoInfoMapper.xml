@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.esb.bbf.console.dao.AppDemoInfoMapper">
+
+    <!--保存数据-->
+    <insert id="save" parameterType="com.esb.bbf.console.domain.AppDemoInfo" useGeneratedKeys="true" keyProperty="id"  >
+        INSERT INTO appdemoinfo
+        (
+        <include refid="Base_Column_List_WithOutPk" />
+        )
+        VALUES
+        (
+        <include refid="Javabean_Column_List_WithOutPk" />
+        )
+    </insert>
+
+     <!--根据主键id，更新appDemoInfo表相应数据-->
+    <update id="updateByPrimaryKey" parameterType="com.esb.bbf.console.domain.AppDemoInfo">
+        UPDATE appdemoinfo
+        <set>
+            <include refid="updateSetSql" />
+        </set>
+        WHERE  id = #{id}
+    </update>
+    <!--根据主键id，查找appDemoInfo表的唯一数据-->
+    <select id="queryByPrimaryKey" parameterType="java.lang.Long"  resultType="com.esb.bbf.console.domain.AppDemoInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM  appdemoinfo  where  id = #{id}
+    </select>
+
+  <!--根据条件，查找appDemoInfo表相应数据-->
+    <select id="queryBySelective"   resultType="com.esb.bbf.console.domain.AppDemoInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM appdemoinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereQuerySelectiveSql" />
+        </trim>
+    </select>
+
+    <!--根据条件，查找appDemoInfo表相应数据的总量-->
+    <select id="queryCountBySelective"   resultType="java.lang.Long">
+        SELECT
+                     count(id )
+                    FROM  appdemoinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereSelectiveSql" />
+        </trim>
+    </select>
+
+
+    <!--根据条件，分页查找appDemoInfo表相应数据-->
+    <select id="queryBySelectiveForPagination" parameterType="com.esb.bbf.console.domain.AppDemoInfo" resultType="com.esb.bbf.console.domain.AppDemoInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM appdemoinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereQuerySelectiveSql" />
+        </trim>
+                order by id desc
+                  LIMIT #{startRow} , #{pageSize}
+    </select>
+
+
+    <!--start:根据唯一索引进行查找和更新,appDemoInfo表-->
+          <select id="queryByAppId"  parameterType="java.lang.String"   resultType="com.esb.bbf.console.domain.AppDemoInfo">
+          SELECT
+          <include refid="Base_Column_List" />
+          FROM appdemoinfo WHERE    appId=#{appId}
+      </select>
+
+        <update id="updateByAppId" parameterType="com.esb.bbf.console.domain.AppDemoInfo" >
+            UPDATE appdemoinfo
+            <set>
+                <include refid="updateSetSql" />
+            </set>
+            WHERE  appId=#{appId}
+        </update>
+        <!--end:根据唯一索引进行查找和更新,appDemoInfo表-->
+
+    <!--appDemoInfo表所有字段-->
+    <sql id="Base_Column_List">
+                    id  ,    <!---->
+                    appId  ,    <!--app编号-->
+                    appName  ,    <!--名字-->
+                    url  ,    <!--url-->
+                    body  ,    <!--body-->
+                    contentType  ,    <!--contentType-->
+                    header  ,    <!--header-->
+                    formData  ,    <!--formData-->
+                    method  ,    <!--method-->
+                    mockInfo  ,    <!--mock信息-->
+                    mocked  ,    <!--是否mock调试-->
+                    status  ,    <!--状态-->
+                    ext1  ,    <!--扩展字段1-->
+                    ext2  ,    <!--扩展字段2-->
+                    updateDate  ,    <!--更新时间-->
+                    createdDate      <!--创建时间-->
+            </sql>
+
+    <!--appDemoInfo表除了自增长的所有字段-->
+    <sql id="Base_Column_List_WithOutPk">
+                                                      appId      ,   <!--app编号-->
+                                              appName      ,   <!--名字-->
+                                              url      ,   <!--url-->
+                                              body      ,   <!--body-->
+                                              contentType      ,   <!--contentType-->
+                                              header      ,   <!--header-->
+                                              formData      ,   <!--formData-->
+                                              method      ,   <!--method-->
+                                              mockInfo      ,   <!--mock信息-->
+                                              mocked      ,   <!--是否mock调试-->
+                                              status      ,   <!--状态-->
+                                              ext1      ,   <!--扩展字段1-->
+                                              ext2      ,   <!--扩展字段2-->
+                                              updateDate      ,   <!--更新时间-->
+                                              createdDate         <!--创建时间-->
+                        </sql>
+
+    <!--javabean除了自增长的所有字段-->
+    <sql id="Javabean_Column_List_WithOutPk">
+                                                                            #{appId} ,                     <!--app编号-->
+                                                                    #{appName} ,                     <!--名字-->
+                                                                    #{url} ,                     <!--url-->
+                                                                    #{body} ,                     <!--body-->
+                                                                    #{contentType} ,                     <!--contentType-->
+                                                                    #{header} ,                     <!--header-->
+                                                                    #{formData} ,                     <!--formData-->
+                                                                    #{method} ,                     <!--method-->
+                                                                    #{mockInfo} ,                     <!--mock信息-->
+                                                                    #{mocked} ,                     <!--是否mock调试-->
+                                                                    #{status} ,                     <!--状态-->
+                                                                    #{ext1} ,                     <!--扩展字段1-->
+                                                                    #{ext2} ,                     <!--扩展字段2-->
+                                                                    #{updateDate} ,                     <!--更新时间-->
+                                                                    #{createdDate}                      <!--创建时间-->
+                        </sql>
+
+
+    <sql id="updateSetSql">
+                    <if test="id != null">
+                id=#{id},
+            </if>
+                    <if test="appId != null">
+                appId=#{appId},
+            </if>
+                    <if test="appName != null">
+                appName=#{appName},
+            </if>
+                    <if test="url != null">
+                url=#{url},
+            </if>
+                    <if test="body != null">
+                body=#{body},
+            </if>
+                    <if test="contentType != null">
+                contentType=#{contentType},
+            </if>
+                    <if test="header != null">
+                header=#{header},
+            </if>
+                    <if test="formData != null">
+                formData=#{formData},
+            </if>
+                    <if test="method != null">
+                method=#{method},
+            </if>
+                    <if test="mockInfo != null">
+                mockInfo=#{mockInfo},
+            </if>
+                    <if test="mocked != null">
+                mocked=#{mocked},
+            </if>
+                    <if test="status != null">
+                status=#{status},
+            </if>
+                    <if test="ext1 != null">
+                ext1=#{ext1},
+            </if>
+                    <if test="ext2 != null">
+                ext2=#{ext2},
+            </if>
+                    <if test="updateDate != null">
+                updateDate=#{updateDate},
+            </if>
+                    <if test="createdDate != null">
+                createdDate=#{createdDate},
+            </if>
+            </sql>
+
+
+    <sql id="whereQuerySelectiveSql">
+        <if test="query!= null">
+                                                <if test="query.id != null">
+                        AND  id = #{query.id}
+                    </if>
+                
+                                                <if test="query.appId != null and query.appId!=''">
+                     AND   appId = #{query.appId}
+                    </if>
+                
+                                                <if test="query.appName != null and query.appName!=''">
+                     AND   appName = #{query.appName}
+                    </if>
+                
+                                                <if test="query.url != null">
+                        AND  url = #{query.url}
+                    </if>
+                
+                                                <if test="query.body != null">
+                        AND  body = #{query.body}
+                    </if>
+                
+                                                <if test="query.contentType != null and query.contentType!=''">
+                     AND   contentType = #{query.contentType}
+                    </if>
+                
+                                                <if test="query.header != null">
+                        AND  header = #{query.header}
+                    </if>
+                
+                                                <if test="query.formData != null">
+                        AND  formData = #{query.formData}
+                    </if>
+                
+                                                <if test="query.method != null and query.method!=''">
+                     AND   method = #{query.method}
+                    </if>
+                
+                                                <if test="query.mockInfo != null">
+                        AND  mockInfo = #{query.mockInfo}
+                    </if>
+                
+                                                <if test="query.mocked != null">
+                        AND  mocked = #{query.mocked}
+                    </if>
+                
+                                                <if test="query.status != null">
+                        AND  status = #{query.status}
+                    </if>
+                
+                                                <if test="query.ext1 != null and query.ext1!=''">
+                     AND   ext1 = #{query.ext1}
+                    </if>
+                
+                                                <if test="query.ext2 != null and query.ext2!=''">
+                     AND   ext2 = #{query.ext2}
+                    </if>
+                
+                                                <if test="query.updateDate != null">
+                        AND  updateDate = #{query.updateDate}
+                    </if>
+                
+                                                <if test="query.createdDate != null">
+                        AND  createdDate = #{query.createdDate}
+                    </if>
+                
+                    </if>
+    </sql>
+
+    <sql id="whereSelectiveSql">
+                                                <if test="id != null">
+                        AND id = #{id}
+                    </if>
+                                                                <if test="appId != null and appId!=''">
+                        AND    appId = #{appId}
+                    </if>
+                                                                <if test="appName != null and appName!=''">
+                        AND    appName = #{appName}
+                    </if>
+                                                                <if test="url != null">
+                        AND url = #{url}
+                    </if>
+                                                                <if test="body != null">
+                        AND body = #{body}
+                    </if>
+                                                                <if test="contentType != null and contentType!=''">
+                        AND    contentType = #{contentType}
+                    </if>
+                                                                <if test="header != null">
+                        AND header = #{header}
+                    </if>
+                                                                <if test="formData != null">
+                        AND formData = #{formData}
+                    </if>
+                                                                <if test="method != null and method!=''">
+                        AND    method = #{method}
+                    </if>
+                                                                <if test="mockInfo != null">
+                        AND mockInfo = #{mockInfo}
+                    </if>
+                                                                <if test="mocked != null">
+                        AND mocked = #{mocked}
+                    </if>
+                                                                <if test="status != null">
+                        AND status = #{status}
+                    </if>
+                                                                <if test="ext1 != null and ext1!=''">
+                        AND    ext1 = #{ext1}
+                    </if>
+                                                                <if test="ext2 != null and ext2!=''">
+                        AND    ext2 = #{ext2}
+                    </if>
+                                                                <if test="updateDate != null">
+                        AND updateDate = #{updateDate}
+                    </if>
+                                                                <if test="createdDate != null">
+                        AND createdDate = #{createdDate}
+                    </if>
+                                </sql>
+</mapper>

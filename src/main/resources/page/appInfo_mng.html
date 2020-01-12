@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title>case管理</title>
+
+    <script src="/js/header.js?t=sdfd" type="text/javascript"></script>
+    <script src="/js/adminLTE-header.js?t=123455891" type="text/javascript"></script>
+
+</head>
+<body>
+<div id="rrapp">
+    <div class="form-horizontal" style="width: auto;padding:20px">
+        <div class="form-group">
+            <label class=" col-md-1 col-md-offset-2 control-label">appId：</label>
+            <div class="col-md-2">
+                <input class="form-control" name="appId" v-model="params.appId" />
+             </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-md-1 col-md-offset-2  control-label">系统：</label>
+            <div class="col-md-2">
+                <select class="form-control" columWidthClass="col-xs-6" id="systemCode"
+                        name="systemCode"
+                        v-model="params.systemCode"
+                        required>
+                    <option value="" >请选择</option>
+                    <template v-for="(value, name) in systemCodes">
+                        <option v-bind:value="name"
+                                v-if="name == appInfo.systemCode" selected>
+                            {{ value }}
+                        </option>
+                        <option :value="name" v-else>
+                            {{ value }}
+                        </option>
+                    </template>
+                </select>
+            </div>
+
+            <label class="col-md-1 control-label">拥有者：</label>
+            <div class="col-md-2">
+                <input class="form-control" name="userName" v-model="params.userName" />
+            </div>
+
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 30px;">
+            <div class="col-md-offset-5">
+                <button type="button" class="btn btn-success" @click="query">查询</button>
+                &nbsp;&nbsp;<button type="button" class="btn btn-default" @click="create">新增</button>
+            </div>
+        </div>
+    </div>
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+</div>
+
+<script src="/js/appInfo_mng.js?t=dddee"></script>
+</body>
+</html>

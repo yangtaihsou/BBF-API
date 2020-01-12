@@ -1,0 +1,163 @@
+<html>
+<head>
+    <script src="/js/header.js?t=1234" type="text/javascript"></script>
+    <script src="/js/adminLTE-header.js?t=1234" type="text/javascript"></script>
+    <title>接口编辑</title>
+    <meta charset="UTF-8"/>
+    <style>
+
+    </style>
+</head>
+<body>
+<form id="jsfForm" onsubmit="return false;" class="form-bordered" role="form">
+    <input type="hidden" id="interfaceType" name="interfaceType" />
+    <input type="hidden" id="interfaceId" name="interfaceId" />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseOne">
+                                            接口信息
+                                        </a>
+                                    </h1>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="nav-tabs-custom"><!--
+                                            <ul id="nav" class="nav nav-tabs">
+                                                <li><a id="2" href="#POST">HTTP</a></li>
+                                                <li><a id="6" href="#script">脚本请求</a></li>
+                                                <li><a id="1" href="#JSF">microservice 请求</a></li>
+                                            </ul>-->
+                                            <div class="tab-content">
+                                                <div class="tab-pane " id="JSF">
+                                                </div>
+                                                <div class="tab-pane active" id="POST">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="box-body">
+                                                                <div class="col-xs-12" id="postHead">
+                                                                </div>
+                                                                <div class="col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-xs-1  control-label">接口名</label>
+                                                                        <input type="text" id="post_interfaceName"
+                                                                               name="post_interfaceName"
+                                                                               class="form-control"
+                                                                               columWidthClass="col-xs-6"
+                                                                               placeholder="添加接口后的展示名称"
+                                                                        />
+                                                                        <input type="text" id="jsf_alias"
+                                                                               name="jsf_alias"
+                                                                               class="form-control"
+                                                                               columWidthClass="col-xs-2"
+                                                                               placeholder="alias"
+                                                                        />
+                                                                        <button type="submit" id="postRequest"
+                                                                                class="btn btn-info">执行接口
+                                                                        </button>&nbsp;&nbsp;
+                                                                        <button type="button" id="postBodyFormart"
+                                                                                class="btn btn-info">参数JSON格式化
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="col-xs-1  control-label">地址</label>
+                                                                        <select name="post_method" id="post_method"
+                                                                                class="form-control"
+                                                                                columWidthClass="col-sm-2">
+                                                                            <option value="POST">POST</option>
+                                                                            <option value="GET">GET</option>
+                                                                            <option value="PUT">PUT</option>
+                                                                            <option value="DELETE">DELETE</option>
+                                                                            <option value="HEAD">HEAD</option>
+                                                                            <option value="OPTIONS">OPTIONS</option>
+                                                                            <option value="TRACE">PATCH</option>
+                                                                        </select>
+                                                                        <input type="text" id="post_url" name="post_url"
+                                                                               class="form-control"
+                                                                               columWidthClass="col-xs-9"
+                                                                               placeholder="请输入url地址信息"/>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="col-xs-1  control-label">请求值</label>
+                                                                        <textarea id="post_body" name="post_body"
+                                                                                  class="form-control" rows="16"
+                                                                                  columWidthClass="col-xs-5"> </textarea>
+                                                                        <label class="col-xs-1  control-label">返回值</label>
+                                                                        <div id="post_res_body" name="post_res_body"
+                                                                             columwidthclass="col-xs-5"
+                                                                             class="form-control" contenteditable="true"
+                                                                             style="height: 294px;padding: 0px;"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.tab-content -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <h1 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion"
+                                                   href="#collapse5">
+                                                    接口执行的前置条件
+                                                </a>
+                                            </h1>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <button type="button" class="btn btn-warning btn-xs"
+                                                    onclick="addPrecondition();">添加
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="collapse5" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="col-xs-9">
+                                            <div id="preconditionReq">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <div id="preconditionRes">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+
+                <button type="button" id="btmCancel" class="btn pull-right btn-cancel" data-dismiss="modal"
+                        onclick="window.parent.closeBootbox();">取&nbsp;&nbsp;消
+                </button>
+                <button type="submit" id="btnSave" class="btn btn-info pull-right btn-submit">保&nbsp;&nbsp;存
+                    (暂未开放)</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- /.row -->
+
+<footer>
+    <!--<script type="text/javascript" src=""></script>-->
+</footer>
+</body>
+</html>

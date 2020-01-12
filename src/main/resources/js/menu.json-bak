@@ -1,0 +1,78 @@
+{
+  "menuList": [
+    {
+      "icon": "fa fa-calendar",
+      "isShow": 1,
+      "menuId": 1,
+      "name": "在线编码管理",
+      "open": null,
+      "orderNum": 1,
+      "parentId": 1,
+      "parentName": null,
+      "perms": null,
+      "type": 1,
+      "updateTime": null,
+      "url": "/page/appInfo_mng.html"
+    },
+    {
+      "icon": "fa fa-pied-piper",
+      "isShow": 1,
+      "menuId": 2,
+      "name": "脚本管理",
+      "open": null,
+      "orderNum": 2,
+      "parentId": 1,
+      "parentName": null,
+      "perms": null,
+      "type": 1,
+      "updateTime": null,
+      "url": "/page/jvmScriptInfo_mng.html"
+    },
+
+    {
+      "icon": "fa fa-reorder",
+      "isShow": 1,
+      "menuId": 3,
+      "name": "接口管理",
+      "open": null,
+      "orderNum": 3,
+      "parentId": 1,
+      "parentName": null,
+      "perms": null,
+      "type": 1,
+      "updateTime": null,
+      "url": ""
+    },
+
+    {
+      "icon": "fa fa-flickr",
+      "isShow": 1,
+      "menuId": 3,
+      "name": "API自动化测试",
+      "open": null,
+      "orderNum": 3,
+      "parentId": 1,
+      "parentName": null,
+      "perms": null,
+      "type": 1,
+      "updateTime": null,
+      "url": ""
+    },
+
+    {
+      "icon": "fa fa-tripadvisor",
+      "isShow": 1,
+      "menuId": 3,
+      "name": "API流量回放-",
+      "open": null,
+      "orderNum": 3,
+      "parentId": 1,
+      "parentName": null,
+      "perms": null,
+      "type": 1,
+      "updateTime": null,
+      "url": ""
+    }
+  ],
+  "code": 0
+}

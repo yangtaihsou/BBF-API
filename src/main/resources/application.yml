@@ -1,0 +1,29 @@
+logging:
+  config:
+    classpath: logback.xml
+spring:
+  mvc:
+    favicon:
+      enabled: false
+  output:
+    ansi:
+      enabled: always
+  application:
+    name: bittest
+mybatis:
+  config-location: classpath:config/mybatis-config.xml
+  mapper-locations: classpath:sqlmap/*.xml
+
+---
+spring:
+  profiles: production
+server:
+  tomcat:
+    accesslog:
+      directory: logs
+      enabled: true
+      prefix: localhost_access_log
+      suffix: .log
+      pattern: "%A|%h|%m|%t|%D|&quot;%r&quot;|&quot;%{Referer}i&quot;|&quot;%{User-Agent}i&quot;|%s|%S|%b|%{X-Request-ID}i|%{begin:msec}t|%{end:msec}t"
+      rename-on-rotate: true
+

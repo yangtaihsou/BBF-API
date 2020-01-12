@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title>case管理</title>
+
+    <script src="/js/header.js" type="text/javascript"></script>
+    <script>
+        var dics = {
+            scriptType:  [
+                { text: 'groovy', value: 'groovy' },
+                { text: 'javascript', value: 'javascript' },
+                { text: 'python', value: 'python' },
+                { text: 'ruby', value: 'ruby' }
+            ]
+        }
+    </script>
+</head>
+<body>
+<div id="rrapp">
+    <div class="form-horizontal" style="width: auto;padding:20px">
+        <div class="form-group">
+            <label class=" col-md-1 col-md-offset-2 control-label">类名：</label>
+            <div class="col-md-2">
+                <input class="form-control" name="className" v-model="params.className" />
+             </div>
+            <label class="col-md-1  control-label">脚本类型：</label>
+            <div class="col-md-2">
+                <select class="form-control" v-model="params.scriptType"  >
+                    <option value="">请选择</option>
+                    <option v-for="option in dics.scriptType" v-bind:value="option.value">
+                        {{ option.value }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-1 col-md-offset-2 control-label">操作人：</label>
+            <div class="col-md-2">
+                <input class="form-control" name="userName" v-model="params.userName" />
+            </div>
+            <label class="col-md-1  control-label">系统名字：</label>
+            <div class="col-md-2">
+                <input class="form-control" name="userName" v-model="params.systemName" />
+            </div>
+
+
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 30px;">
+            <div class="col-md-offset-5">
+                <button type="button" class="btn btn-success" @click="query">查询</button>
+                &nbsp;&nbsp;<button type="button" class="btn btn-default" @click="create">新增</button>
+            </div>
+        </div>
+    </div>
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+</div>
+
+<script src="/js/caseConfig_mng.js?t=123456"></script>
+</body>
+</html>

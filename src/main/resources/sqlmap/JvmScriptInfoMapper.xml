@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.esb.bbf.console.dao.JvmScriptInfoMapper">
+
+    <!--保存数据-->
+    <insert id="save" parameterType="com.esb.bbf.console.domain.JvmScriptInfo" useGeneratedKeys="true" keyProperty="id"  >
+        INSERT INTO jvmscriptinfo
+        (
+        <include refid="Base_Column_List_WithOutPk" />
+        )
+        VALUES
+        (
+        <include refid="Javabean_Column_List_WithOutPk" />
+        )
+    </insert>
+
+     <!--根据主键id，更新jvmScriptInfo表相应数据-->
+    <update id="updateByPrimaryKey" parameterType="com.esb.bbf.console.domain.JvmScriptInfo">
+        UPDATE jvmscriptinfo
+        <set>
+            <include refid="updateSetSql" />
+        </set>
+        WHERE  id = #{id}
+    </update>
+    <!--根据主键id，查找jvmScriptInfo表的唯一数据-->
+    <select id="queryByPrimaryKey" parameterType="java.lang.Long"  resultType="com.esb.bbf.console.domain.JvmScriptInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM  jvmscriptinfo  where  id = #{id}
+    </select>
+
+  <!--根据条件，查找jvmScriptInfo表相应数据-->
+    <select id="queryBySelective"   resultType="com.esb.bbf.console.domain.JvmScriptInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM jvmscriptinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereQuerySelectiveSql" />
+        </trim>
+    </select>
+
+    <!--根据条件，查找jvmScriptInfo表相应数据的总量-->
+    <select id="queryCountBySelective"   resultType="java.lang.Long">
+        SELECT
+                     count(id )
+                    FROM  jvmscriptinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereSelectiveSql" />
+        </trim>
+    </select>
+
+
+    <!--根据条件，分页查找jvmScriptInfo表相应数据-->
+    <select id="queryBySelectiveForPagination" parameterType="com.esb.bbf.console.domain.JvmScriptInfo" resultType="com.esb.bbf.console.domain.JvmScriptInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM jvmscriptinfo
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="whereQuerySelectiveSql" />
+        </trim>
+                order by id desc
+                  LIMIT #{startRow} , #{pageSize}
+    </select>
+
+
+    <!--start:根据唯一索引进行查找和更新,jvmScriptInfo表-->
+          <select id="queryByScriptId"  parameterType="java.lang.String"   resultType="com.esb.bbf.console.domain.JvmScriptInfo">
+          SELECT
+          <include refid="Base_Column_List" />
+          FROM jvmscriptinfo WHERE    scriptId=#{scriptId}
+      </select>
+
+        <update id="updateByScriptId" parameterType="com.esb.bbf.console.domain.JvmScriptInfo" >
+            UPDATE jvmscriptinfo
+            <set>
+                <include refid="updateSetSql" />
+            </set>
+            WHERE  scriptId=#{scriptId}
+        </update>
+        <!--end:根据唯一索引进行查找和更新,jvmScriptInfo表-->
+
+    <!--jvmScriptInfo表所有字段-->
+    <sql id="Base_Column_List">
+                    id  ,    <!---->
+                    scriptId  ,    <!--脚本编号-->
+                    scriptName  ,    <!--脚本作用名字-->
+                    scriptText  ,    <!--脚本内容-->
+                    scriptType  ,    <!--case脚本语言类型-->
+                    appId  ,    <!--apiId-->
+                    remark  ,    <!--备注-->
+                    version  ,    <!--版本-->
+                    indexOrder  ,    <!--排序-->
+                    demoInputPara  ,    <!--演示脚本的输入参数-->
+                    themeType  ,    <!--脚本样式-->
+                    status  ,    <!--状态-->
+                    ext1  ,    <!--扩展字段1-->
+                    ext2  ,    <!--扩展字段2-->
+                    updateDate  ,    <!--更新时间-->
+                    createdDate      <!--创建时间-->
+            </sql>
+
+    <!--jvmScriptInfo表除了自增长的所有字段-->
+    <sql id="Base_Column_List_WithOutPk">
+                                                      scriptId      ,   <!--脚本编号-->
+                                              scriptName      ,   <!--脚本作用名字-->
+                                              scriptText      ,   <!--脚本内容-->
+                                              scriptType      ,   <!--case脚本语言类型-->
+                                              appId      ,   <!--apiId-->
+                                              remark      ,   <!--备注-->
+                                              version      ,   <!--版本-->
+                                              indexOrder      ,   <!--排序-->
+                                              demoInputPara      ,   <!--演示脚本的输入参数-->
+                                              themeType      ,   <!--脚本样式-->
+                                              status      ,   <!--状态-->
+                                              ext1      ,   <!--扩展字段1-->
+                                              ext2      ,   <!--扩展字段2-->
+                                              updateDate      ,   <!--更新时间-->
+                                              createdDate         <!--创建时间-->
+                        </sql>
+
+    <!--javabean除了自增长的所有字段-->
+    <sql id="Javabean_Column_List_WithOutPk">
+                                                                            #{scriptId} ,                     <!--脚本编号-->
+                                                                    #{scriptName} ,                     <!--脚本作用名字-->
+                                                                    #{scriptText} ,                     <!--脚本内容-->
+                                                                    #{scriptType} ,                     <!--case脚本语言类型-->
+                                                                    #{appId} ,                     <!--apiId-->
+                                                                    #{remark} ,                     <!--备注-->
+                                                                    #{version} ,                     <!--版本-->
+                                                                    #{indexOrder} ,                     <!--排序-->
+                                                                    #{demoInputPara} ,                     <!--演示脚本的输入参数-->
+                                                                    #{themeType} ,                     <!--脚本样式-->
+                                                                    #{status} ,                     <!--状态-->
+                                                                    #{ext1} ,                     <!--扩展字段1-->
+                                                                    #{ext2} ,                     <!--扩展字段2-->
+                                                                    #{updateDate} ,                     <!--更新时间-->
+                                                                    #{createdDate}                      <!--创建时间-->
+                        </sql>
+
+
+    <sql id="updateSetSql">
+                    <if test="id != null">
+                id=#{id},
+            </if>
+                    <if test="scriptId != null">
+                scriptId=#{scriptId},
+            </if>
+                    <if test="scriptName != null">
+                scriptName=#{scriptName},
+            </if>
+                    <if test="scriptText != null">
+                scriptText=#{scriptText},
+            </if>
+                    <if test="scriptType != null">
+                scriptType=#{scriptType},
+            </if>
+                    <if test="appId != null">
+                appId=#{appId},
+            </if>
+                    <if test="remark != null">
+                remark=#{remark},
+            </if>
+                    <if test="version != null">
+                version=#{version},
+            </if>
+                    <if test="indexOrder != null">
+                indexOrder=#{indexOrder},
+            </if>
+                    <if test="demoInputPara != null">
+                demoInputPara=#{demoInputPara},
+            </if>
+                    <if test="themeType != null">
+                themeType=#{themeType},
+            </if>
+                    <if test="status != null">
+                status=#{status},
+            </if>
+                    <if test="ext1 != null">
+                ext1=#{ext1},
+            </if>
+                    <if test="ext2 != null">
+                ext2=#{ext2},
+            </if>
+                    <if test="updateDate != null">
+                updateDate=#{updateDate},
+            </if>
+                    <if test="createdDate != null">
+                createdDate=#{createdDate},
+            </if>
+            </sql>
+
+
+    <sql id="whereQuerySelectiveSql">
+        <if test="query!= null">
+                                                <if test="query.id != null">
+                        AND  id = #{query.id}
+                    </if>
+                
+                                                <if test="query.scriptId != null and query.scriptId!=''">
+                     AND   scriptId = #{query.scriptId}
+                    </if>
+                
+                                                <if test="query.scriptName != null and query.scriptName!=''">
+                     AND   scriptName = #{query.scriptName}
+                    </if>
+                
+                                                <if test="query.scriptText != null">
+                        AND  scriptText = #{query.scriptText}
+                    </if>
+                
+                                                <if test="query.scriptType != null and query.scriptType!=''">
+                     AND   scriptType = #{query.scriptType}
+                    </if>
+                
+                                                <if test="query.appId != null and query.appId!=''">
+                     AND   appId = #{query.appId}
+                    </if>
+                
+                                                <if test="query.remark != null">
+                        AND  remark = #{query.remark}
+                    </if>
+                
+                                                <if test="query.version != null and query.version!=''">
+                     AND   version = #{query.version}
+                    </if>
+                
+                                                <if test="query.indexOrder != null">
+                        AND  indexOrder = #{query.indexOrder}
+                    </if>
+                
+                                                <if test="query.demoInputPara != null">
+                        AND  demoInputPara = #{query.demoInputPara}
+                    </if>
+                
+                                                <if test="query.themeType != null and query.themeType!=''">
+                     AND   themeType = #{query.themeType}
+                    </if>
+                
+                                                <if test="query.status != null">
+                        AND  status = #{query.status}
+                    </if>
+                
+                                                <if test="query.ext1 != null and query.ext1!=''">
+                     AND   ext1 = #{query.ext1}
+                    </if>
+                
+                                                <if test="query.ext2 != null and query.ext2!=''">
+                     AND   ext2 = #{query.ext2}
+                    </if>
+                
+                                                <if test="query.updateDate != null">
+                        AND  updateDate = #{query.updateDate}
+                    </if>
+                
+                                                <if test="query.createdDate != null">
+                        AND  createdDate = #{query.createdDate}
+                    </if>
+                
+                    </if>
+    </sql>
+
+    <sql id="whereSelectiveSql">
+                                                <if test="id != null">
+                        AND id = #{id}
+                    </if>
+                                                                <if test="scriptId != null and scriptId!=''">
+                        AND    scriptId = #{scriptId}
+                    </if>
+                                                                <if test="scriptName != null and scriptName!=''">
+                        AND    scriptName = #{scriptName}
+                    </if>
+                                                                <if test="scriptText != null">
+                        AND scriptText = #{scriptText}
+                    </if>
+                                                                <if test="scriptType != null and scriptType!=''">
+                        AND    scriptType = #{scriptType}
+                    </if>
+                                                                <if test="appId != null and appId!=''">
+                        AND    appId = #{appId}
+                    </if>
+                                                                <if test="remark != null">
+                        AND remark = #{remark}
+                    </if>
+                                                                <if test="version != null and version!=''">
+                        AND    version = #{version}
+                    </if>
+                                                                <if test="indexOrder != null">
+                        AND indexOrder = #{indexOrder}
+                    </if>
+                                                                <if test="demoInputPara != null">
+                        AND demoInputPara = #{demoInputPara}
+                    </if>
+                                                                <if test="themeType != null and themeType!=''">
+                        AND    themeType = #{themeType}
+                    </if>
+                                                                <if test="status != null">
+                        AND status = #{status}
+                    </if>
+                                                                <if test="ext1 != null and ext1!=''">
+                        AND    ext1 = #{ext1}
+                    </if>
+                                                                <if test="ext2 != null and ext2!=''">
+                        AND    ext2 = #{ext2}
+                    </if>
+                                                                <if test="updateDate != null">
+                        AND updateDate = #{updateDate}
+                    </if>
+                                                                <if test="createdDate != null">
+                        AND createdDate = #{createdDate}
+                    </if>
+                                </sql>
+</mapper>

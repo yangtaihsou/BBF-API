@@ -1,0 +1,155 @@
+<head xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+    <title>添加api</title>
+
+    <script src="/js/header.js?t=1234" type="text/javascript"></script>
+    <script src="/js/adminLTE-header.js?t=123455891" type="text/javascript"></script>
+    <style>
+        .form-horizontal .control-label {
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: right;
+        }
+    </style>
+    <script>
+        var dics = {
+            systemCode: [
+                {text: 'test', value: '测试系统'},
+                {text: 'student', value: 'student'},
+                {text: 'math', value: 'math'},
+                {text: 'management', value: 'management'},
+                {text: 'apoll', value: 'apoll'}
+            ]
+        }
+    </script>
+</head>
+<body>
+<form id="rrapp" v-cloak onsubmit="return false;" class="form-horizontal form-bordered" role="form">
+    <!--   style="width: 1000px;"-->
+    <div class="box-body">
+        <div class="col-xs-8 col-xs-offset-2">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"
+                               href="#collapseOne">
+                                app信息
+                            </a>
+                        </h1>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="from-control col-xs-4">app名称</label>
+                                <input type="text" id="appName" name="appName" class="form-control"
+                                       columWidthClass="col-xs-8" required v-model="appInfo.appName"/>
+                                <input type="hidden" id="appId" name="appId" v-model="appInfo.appId"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="from-control col-xs-4">所属系统</label>
+                                <select class="form-control" columWidthClass="col-xs-6" id="systemCode"
+                                        name="systemCode"
+                                        v-model="appInfo.systemCode"
+                                        required>
+                                    <option value="" disabled>请选择</option>
+                                    <template v-for="(value, name) in systemCodes">
+                                        <option v-bind:value="name"
+                                                v-if="name == appInfo.systemCode" selected>
+                                            {{ value }}
+                                        </option>
+                                        <option :value="name" v-else>
+                                            {{ value }}
+                                        </option>
+                                    </template>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="from-control col-xs-4">备&nbsp;&nbsp;&nbsp;&nbsp;注</label>
+                                <textarea class="form-control" rows="3" v-model="appInfo.remark"
+                                          columWidthClass="col-xs-8" required> </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="from-control col-xs-4">拥有者</label>
+                                <input type="text" id="userIds" name="userIds" class="form-control"
+                                       columWidthClass="col-xs-8" required v-model="appInfo.userId"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="from-control col-xs-4">授&nbsp;&nbsp;&nbsp;&nbsp;权</label>
+                                <textarea class="form-control" rows="3" v-model="appInfo.userIds"
+                                          columWidthClass="col-xs-8"   placeholder="邮箱地址，使用;分割"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h1 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseTwo">
+                                        参数的验证配置
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button type="button" class="btn btn-warning btn-xs" @click="addCheckPara">添加
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <template v-for="(item,index) in checkParaConfigList">
+                                <div class="form-group">
+                                    <label class="from-control col-xs-2 control-label">参数名 </label>
+                                    <div class="col-xs-3"><input type="text"
+                                                                 v-model="item.name"
+                                                                 class="form-control"
+                                                                 columwidthclass="col-xs-1"
+                                                                 placeholder="name"
+                                                                 :value="item.name"></div>
+                                    <label class="from-control col-xs-2 control-label">验证配置</label>
+                                    <div class="col-xs-3">
+                                        <textarea class="form-control" rows="3"
+                                                  v-model="item.config"
+                                                  :value="item.config"
+                                                  columWidthClass="col-xs-8"> </textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-danger btn-xs" @click="removeCheckPara(index)">删除
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-xs"
+                                            @click="vm.jsonFormart(index)">json格式
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table id="jqGrid"></table>
+    <!-- <div id="jqGridPager"></div>-->
+    <template v-if="appInfo.id>0">
+        <div class="box-footer">
+            <button type="button" @click="vm.addNewScript()" class="btn btn-xs btn-danger btn-size">新增脚本</button>
+            <button type="button" @click="vm.addHttpInterface()" class="btn btn-xs btn-info btn-size">新增接口</button>
+            <button type="button" class="btn btn-xs btn-warning btn-size">添加已有接口</button>
+            <button type="button" class="btn btn-xs btn-warning btn-size">抓取半小时的流量</button>
+        </div>
+    </template>
+
+    <div class="box-footer">
+        <template v-if="appInfo.id>0">
+            <button type="button" @click="vm.appShow()" class="btn btn-danger btn-info pull-right btn-size">演示</button>
+        </template>
+        <button type="submit" @click="saveOrUpdate" class="btn btn-info pull-right btn-submit">保&nbsp;&nbsp;存
+        </button>
+    </div>
+
+</form>
+
+<script src="/js/appInfo_add.js?t=ddde"></script>
+</body>
+</html>

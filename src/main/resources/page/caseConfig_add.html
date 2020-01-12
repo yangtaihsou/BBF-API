@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title>添加erp管理员</title>
+
+    <script src="/js/header.js" type="text/javascript"></script>
+    <script>
+        var dics = {
+            scriptType: [
+                {text: 'groovy', value: 'groovy(后端)'},
+                {text: 'javascript', value: 'javascript(前端)'},
+                {text: 'python', value: 'python(QA)'},
+                {text: 'ruby', value: 'ruby(创新者)'}
+            ],
+            themeType: [
+                {text: 'github', value: 'github'},
+                {text: 'clouds', value: 'clouds'}, {text: 'monokai', value: 'monokai'},
+                {text: 'twilight', value: 'twilight'}, {text: 'xcode', value: 'xcode'},
+                {text: 'clouds_midnight', value: 'clouds_midnight'}, {text: 'vibrant_ink', value: 'vibrant_ink'},
+                {text: 'tomorrow_night_eighties', value: 'tomorrow_night_eighties'},
+                {text: 'tomorrow_night_bright', value: 'tomorrow_night_bright'},
+                {text: 'tomorrow_night_blue', value: 'tomorrow_night_blue'}, {
+                    text: 'tomorrow_night',
+                    value: 'tomorrow_night'
+                },
+                {text: 'tomorrow', value: 'tomorrow'}, {text: 'textmate', value: 'textmate'}, {
+                    text: 'terminal',
+                    value: 'terminal'
+                },
+                {text: 'sqlserver', value: 'sqlserver'}, {text: 'solarized_light', value: 'solarized_light'},
+                {text: 'solarized_dark', value: 'solarized_dark'}, {
+                    text: 'solarized_dark',
+                    value: 'solarized_dark'
+                }, {text: 'pastel_on_dark', value: 'pastel_on_dark'},
+                {text: 'mono_industrial', value: 'mono_industrial'}, {
+                    text: 'merbivore_soft',
+                    value: 'merbivore_soft'
+                }, {text: 'merbivore', value: 'merbivore'},
+                {text: 'kuroir', value: 'kuroir'}, {text: 'kr_theme', value: 'kr_theme'}, {
+                    text: 'katzenmilch',
+                    value: 'katzenmilch'
+                }, {text: 'iplastic', value: 'iplastic'},
+                {text: 'idle_fingers', value: 'idle_fingers'}, {text: 'gruvbox', value: 'gruvbox'}, {
+                    text: 'gob',
+                    value: 'gob'
+                },
+                {text: 'eclipse', value: 'eclipse'}, {text: 'dreamweaver', value: 'dreamweaver'}, {
+                    text: 'dracula',
+                    value: 'dracula'
+                }, {text: 'dawn', value: 'dawn'},
+                {text: 'crimson_editor', value: 'crimson_editor'}, {text: 'cobalt', value: 'cobalt'}, {
+                    text: 'chrome',
+                    value: 'chrome'
+                }, {text: 'chaos', value: 'chaos'},
+                {text: 'ambiance', value: 'ambiance'}]
+        };
+
+
+    </script>
+    <link rel="stylesheet" href="/statics/css/main.css">
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">类名：</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="caseConfig.className" placeholder="类名"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">版本：</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="caseConfig.version" placeholder="版本"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">系统编码：</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="caseConfig.systemCode" placeholder="系统编码"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">脚本类型：</div>
+            <div class="col-sm-10">
+
+                <select class="form-control" v-model="caseConfig.scriptType" @change="selectScripteVal">
+                    <option value="">请选择</option>
+                    <!--             <option v-for="option in dics.scriptType" v-bind:value="option.value">
+                                     {{ option.text }}
+                                 </option>
+             -->
+                    <template v-for="option in dics.scriptType">
+                        <option v-bind:value="option.text" v-if="option.value == caseConfig.scriptType" selected>
+                            {{ option.text }}
+                        </option>
+                        <option :value="option.text" v-else>
+                            {{ option.text }}
+                        </option>
+                    </template>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">主题风格：</div>
+            <div class="col-sm-10">
+                <select class="form-control" @change="selectThemeTypeVal">
+                    <option v-for="option in dics.themeType" v-bind:value="option.value">
+                        {{ option.value }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">case内容：</div>
+
+        </div>
+        <div>
+            <div>
+                <!--代码输入框（注意请务必设置高度，否则无法显示）-->
+                <pre id="code" class="ace_editor" style="min-height:400px;min-width: 1000px">
+            <textarea class="ace_text-input" v-model="caseConfig.caseText">
+            </textarea></pre>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="保存"/>
+            <!--&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>-->
+
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">手动输入方法：</div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="caseConfig.method" placeholder="运行方法"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">识别的方法列表：</div>
+            <div class="col-sm-3">
+                <select class="form-control" v-model="caseConfig.methodSelect">
+                    <option value="">请选择</option>
+                    <option v-for="option in caseMetods" v-bind:value="option">
+                        {{ option }}
+                    </option>
+                </select>
+            </div>
+            <input type="button" class="btn btn-primary" @click="getCaseMethod" value="识别方法"/>
+            使用javascript、groovy可以识别，其他语言待开发
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">方法参数输入：</div>
+            <div class="col-sm-10">
+                <textarea class="form-control" v-model="caseConfig.inputPara" placeholder=" 多个参数，使用@@@分割"></textarea>
+                多个参数，使用@@@分割
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" @click="runCaseMethod" value="执行case方法"/>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">响应数据：</div>
+            <div class="col-sm-10">
+                <textarea class="form-control" v-model="caseConfig.responseData" placeholder="响应数据"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript"
+        charset="utf-8"></script>
+<script src="http://cdn.bootcss.com/ace/1.2.4/ext-old_ie.js"></script>
+<script>
+    var AceEdtiorObject = (function () {
+        var instance;
+        var _ = function () {
+            var me = this;
+            me.aceEditorInitPara = {'theme': 'clouds', 'language': 'groovy'};
+            //启用提示菜单
+            ace.require("ace/ext/language_tools");
+            //初始化对象
+            me.aceEditor = ace.edit("code");
+            me.aceEdtiorInit = function () {
+                me.aceEditor = ace.edit("code");
+                console.log("aceEdtiorInit----------");
+                //设置风格和语言（更多风格和语言，请到github上相应目录查看）
+                me.aceEditor.setTheme("ace/theme/" + me.aceEditorInitPara.theme);
+                me.aceEditor.session.setMode("ace/mode/" + me.aceEditorInitPara.language);
+                //字体大小
+                me.aceEditor.setFontSize(18);
+                //设置只读（true时只读，用于展示代码）
+                me.aceEditor.setReadOnly(false);
+                //自动换行,设置为off关闭
+                me.aceEditor.setOption("wrap", "free")
+                me.aceEditor.setOptions({
+                    enableBasicAutocompletion: true,
+                    enableSnippets: true,
+                    enableLiveAutocompletion: true
+                });
+                me.aceEditor.resize();
+                me.aceEditor.setAutoScrollEditorIntoView(true);
+                me.aceEditor.setHighlightActiveLine(false);
+            }
+        }
+        return {
+            getInstance: function () {
+                if (!instance) {
+                    instance = new _();
+                }
+                return instance;
+            }
+        }
+    })()
+</script>
+
+<script src="/js/caseConfig_add.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title>添加erp管理员</title>
+    <script src="/js/header.js" type="text/javascript"></script>
+
+    <script>
+
+    </script>
+    <link rel="stylesheet" href="/statics/css/main.css">
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal" onsubmit="return false;">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">脚本名：</div>
+            <div class="col-sm-10">
+                <input type="text" required class="form-control" required v-model="jvmScriptInfo.scriptName"
+                       placeholder="脚本名"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">备注：</div>
+            <div class="col-sm-10">
+                <textarea rows="2" class="form-control" v-model="jvmScriptInfo.remark"
+                          placeholder="备注" required></textarea>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+             <div class="col-sm-2 control-label">版本：</div>
+             <div class="col-sm-10">
+                 <input type="text" class="form-control" v-model="jvmScriptInfo.version" placeholder="版本"/>
+             </div>
+         </div>-->
+        <div class="form-group">
+            <div class="col-sm-2 control-label">脚本类型&主题：</div>
+            <div class="col-sm-2">
+
+                <select class="form-control" style="width: 160px" v-model="jvmScriptInfo.scriptType"
+                        @change="selectScripteVal" required>
+                    <option value="" selected>请选择脚本类型</option>
+                    <template v-for="option in AceEdtiorDics.scriptType">
+                        <option v-bind:value="option.value" v-if="option.value == jvmScriptInfo.scriptType" selected>
+                            {{ option.text }}
+                        </option>
+                        <option :value="option.value" v-else>
+                            {{ option.text }}
+                        </option>
+                    </template>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <select class="form-control" style="width: 200px" v-model="jvmScriptInfo.themeType"
+                        @change="selectThemeTypeVal" required>
+                    <option value="" selected>请选择主题</option>
+                    <template v-for="option in AceEdtiorDics.themeType">
+                        <option v-bind:value="option.text" v-if="option.value == jvmScriptInfo.themeType" selected>
+                            {{ option.text }}
+                        </option>
+                        <option :value="option.text" v-else>
+                            {{ option.text }}
+                        </option>
+                    </template>
+                </select>
+            </div>
+        </div>
+        <!--        <div class="form-group">
+                    <div class="col-sm-2 control-label">主题风格：</div>
+
+                </div>-->
+
+        <div>
+            <div>
+                <!--代码输入框（注意请务必设置高度，否则无法显示）-->
+                <pre id="code" class="ace_editor" style="min-height:600px;min-width: 1000px">
+                    <textarea class="ace_text-input" v-model="jvmScriptInfo.scriptText" required>
+                    </textarea>
+                </pre>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <input type="submit" class="btn btn-primary" @click="saveOrUpdate" value="保存"/>
+            </div>
+            <div class="col-sm-2 control-label">
+                <input type="button" class="btn btn-danger" @click="runScript" value="执行演示"/>{{exeTime}}
+            </div>
+            <div class="col-sm-2 control-label">
+                <input type="button" class="btn btn-warning" @click="jsonFormart" value="格式化返回数据"/>
+            </div>
+
+            <div class="col-sm-2 control-label">
+                <select @change="selectVersion"
+                        class="form-control" style="width: 160px">
+                    <option value="">请选择版本回滚</option>
+                    <template v-for="option in versions">
+                        <option v-bind:value="option.id">
+                            {{ option.text }}
+                        </option>
+                    </template>
+                </select>
+            </div>
+            <div class="col-sm-2 control-label">
+                <a href="https://text-compare.com/" target="_blank">代码diff</a>
+            </div>
+
+            <!--&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>-->
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">演示参数：</div>
+            <div class="col-sm-2">
+                <textarea rows="5" class="form-control" v-model="jvmScriptInfo.demoInputPara"
+                          placeholder="json格式"></textarea>
+            </div>
+            <div class="col-sm-5">
+                <textarea rows="5" class="form-control" v-model="scriptResponseData" placeholder="响应数据"></textarea>
+            </div>
+        </div>
+
+        <!--  <div class="form-group">
+              <div class="col-sm-2 control-label"></div>
+          </div>-->
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript"
+        charset="utf-8"></script>
+<script src="http://cdn.bootcss.com/ace/1.2.4/ext-old_ie.js"></script>
+<script src="/js/aceEditor.js"></script>
+
+<!--<link href="https://cdn.staticfile.org/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.staticfile.org/select2/4.0.3/js/select2.min.js"></script>-->
+<script src="/js/jvmScriptInfo_add.js?t=12322r4"></script>
+</body>
+</html>

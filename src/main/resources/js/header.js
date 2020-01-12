@@ -1,0 +1,13 @@
+document.write('<link rel="stylesheet" href="/statics/plugins/jqgrid/ui.jqgrid-bootstrap.css">');
+document.write('<link rel="stylesheet" href="/statics/plugins/ztree/css/metroStyle/metroStyle.css">');
+document.write('<link rel="stylesheet" href="/statics/css/bootstrap.min.css">');
+document.write('<link rel="stylesheet" href="/statics/css/font-awesome.min.css">');
+document.write('<script src="/js/dateFormater.js"></script>');
+document.write('<script src="/statics/libs/jquery.min.js"></script>');
+document.write('<script src="/statics/libs/bootstrap.min.js"></script>');
+document.write('<script src="/statics/plugins/layer/layer.js"></script>');
+document.write('<script src="/statics/libs/vue.min.js"></script>');
+document.write('<script src="/statics/plugins/jqgrid/grid.locale-cn.js"></script>');
+document.write('<script src="/statics/plugins/jqgrid/jquery.jqGrid.min.js"></script>');
+document.write('<script src="/statics/plugins/ztree/jquery.ztree.all.min.js"></script>');
+document.write('<script src="/js/common.js?t=201706230003"></script>');

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="encoding" value="UTF-8"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/bbf-api.log</file>
+        <Append>true</Append>
+        <prudent>false</prudent>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %d{yyyy-MM-dd/HH:mm:ss.SSS}|%X{localIp}|%X{requestId}|%X{requestSeq}|^_^|[%X{X-B3-TraceId:-}][%t] %-5level %logger{50} %line - %m%n
+            </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/bbf-api.log.%d{yyyy-MM-dd}.%i</fileNamePattern>>
+            <maxFileSize>256MB</maxFileSize>
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>32GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <springProfile name="production">
+        <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+        </appender>
+    </springProfile>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{X-B3-TraceId:-}] [%t] %5p %c.%M:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CatAppender" class="com.dianping.cat.logback.CatLogbackAppender"></appender>
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+
+        <springProfile name="production">
+            <appender-ref ref="Sentry"/>
+        </springProfile>
+
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="CatAppender" />
+    </root>
+</configuration>

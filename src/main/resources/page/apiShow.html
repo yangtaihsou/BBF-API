@@ -1,0 +1,297 @@
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="/js/header.js?t=123422" type="text/javascript"></script>
+    <script src="/js/adminLTE-header.js?t=1234222" type="text/javascript"></script>
+    <title>api展示</title>
+    <meta charset="UTF-8"/>
+    <style>
+
+    </style>
+</head>
+<body>
+<form id="rrapp" v-cloak onsubmit="return false;" class="form-bordered" role="form">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseOne">
+                                            api执行展示
+                                        </a>
+                                    </h1>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="nav-tabs-custom">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="box-body">
+                                                                <div class="col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-xs-1  control-label">地址</label>
+                                                                        <select class="form-control"
+                                                                                v-model="http.method"
+                                                                                columWidthClass="col-sm-2" required>
+                                                                            <option value="POST">POST</option>
+                                                                            <option value="GET">GET</option>
+                                                                            <option value="PUT">PUT</option>
+                                                                            <option value="DELETE">DELETE</option>
+                                                                            <option value="HEAD">HEAD</option>
+                                                                            <option value="OPTIONS">OPTIONS</option>
+                                                                            <option value="TRACE">PATCH</option>
+                                                                        </select>
+                                                                        <input type="text"
+                                                                               v-model="http.url"
+                                                                               class="form-control"
+                                                                               columWidthClass="col-xs-9"
+                                                                               required
+                                                                               placeholder="请输入url地址信息"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12">
+                                                                    <div class="form-group">
+                                                                        <label class="col-xs-1 control-label">header
+                                                                        </label>
+                                                                        <input disabled type="text"
+                                                                               v-model="http.contentType.key"
+                                                                               class="form-control"
+                                                                               columWidthClass="col-xs-2"
+                                                                               placeholder="key"/>
+                                                                        <!--   <input type="text"
+                                                                                  v-model="http.contentType.value"
+                                                                                  class="form-control"
+                                                                                  columWidthClass="col-xs-3"
+                                                                                  placeholder="value"/>-->
+                                                                        <select class="form-control"
+                                                                                @change="selectContentType"
+                                                                                v-model="http.contentType.value"
+                                                                                columWidthClass="col-sm-4" required>
+                                                                            <option value="application/json">
+                                                                                application/json
+                                                                            </option>
+                                                                            <option value="application/x-www-form-urlencoded">
+                                                                                application/x-www-form-urlencoded
+                                                                            </option>
+                                                                        </select>
+                                                                        <button type="button"
+                                                                                class="btn btn-warning btn-xs"
+                                                                                @click="vm.addHeader()">添加header
+                                                                        </button>
+                                                                        <button type="button"
+                                                                                class="btn btn-danger btn-xs"
+                                                                                @click="addFormData">添加form
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12">
+                                                                    <template v-for="(item,index) in http.header">
+                                                                        <div class="form-group">
+                                                                            <label class="col-xs-1 control-label label-warning">
+                                                                                header{{index}}
+                                                                            </label>
+                                                                            <div class="col-xs-3">
+                                                                                <input type="text"
+                                                                                       v-model="item.key"
+                                                                                       class="form-control"
+                                                                                       columWidthClass="col-xs-3"
+                                                                                       placeholder="key"
+                                                                                       :value="item.key"/>
+                                                                            </div>
+                                                                            <div class="col-xs-3">
+                                                                                <input type="text"
+                                                                                       class="form-control"
+                                                                                       columWidthClass="col-xs-3"
+                                                                                       placeholder="value"
+                                                                                       v-model="item.value"
+                                                                                       :value="item.value"/>
+                                                                            </div>
+                                                                            <button type="button"
+                                                                                    class="btn btn-warning btn-xs"
+                                                                                    @click="removeHeader(index)">删除
+                                                                            </button>
+                                                                        </div>
+                                                                    </template>
+                                                                </div>
+                                                                <div class="col-xs-12"
+                                                                     :style="{ visibility: httpformData}">
+
+                                                                    <template v-for="(item,index) in http.formData">
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                    class="col-xs-1 control-label label-danger">
+                                                                                formData{{index}}
+                                                                            </label>
+
+                                                                            <div class="col-xs-3">
+                                                                                <input type="text"
+                                                                                       v-model="item.key"
+                                                                                       class="form-control"
+                                                                                       columWidthClass="col-xs-3"
+                                                                                       placeholder="key"
+                                                                                       :value="item.key"/>
+                                                                            </div>
+                                                                            <div class="col-xs-3">
+                                                                                <input type="text"
+                                                                                       v-model="item.value"
+                                                                                       class="form-control"
+                                                                                       columWidthClass="col-xs-3"
+                                                                                       placeholder="value"
+                                                                                       :value="item.value"/>
+                                                                            </div>
+                                                                            <button type="button"
+                                                                                    class="btn btn-danger btn-xs"
+                                                                                    @click="removeFormData(index)">删除
+                                                                            </button>
+                                                                        </div>
+                                                                    </template>
+                                                                </div>
+                                                                <div class="col-xs-12">
+
+                                                                    <div class="form-group">
+                                                                        <label class="col-xs-1  control-label">请求body值</label>
+                                                                        <textarea v-model="http.body"
+                                                                                  class="form-control" rows="16"
+                                                                                  columWidthClass="col-xs-5"
+                                                                                  :style="{ visibility: httpbody}">
+                                                                        </textarea>
+                                                                        <label class="col-xs-1  control-label">返回值</label>
+                                                                        <textarea v-model="httpresponse"
+                                                                                  class="form-control" rows="16"
+                                                                                  columWidthClass="col-xs-5"> </textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.tab-content -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div    class="box-footer">
+                <button type="submit" @click="vm.show()" class="btn btn-info pull-right btn-submit">api演示{{exeTime
+                    }}{{serverTime}}</button>
+                <button type="button" @click="vm.jsonFormart()"
+                        class="btn btn-warning pull-right btn-submit">参数JSON格式化
+                </button>
+                <button type="submit" @click="vm.saveOrUpdate()" class="btn btn-info pull-right btn-submit">保存</button>
+
+                <input type="checkbox" v-model="http.mocked" value="true"
+                       style="zoom:180%;" />mock
+               <!-- <div class="checkbox checkbox-success">
+                    <input id="chkjquery" class="styled" type="checkbox" checked>
+                    <label for="chkjquery">
+                        check
+                    </label>
+                </div>-->
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h1 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseTwo">
+                                    mock返回数据
+                                </a>
+                            </h1>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" v-bind:class="{ in: http.mocked }">
+                   <!-- v-bind:class="{ in: http.mocked }"-->
+                    <div class="panel-body">
+
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="box-body">
+                                                <div class="col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-1  control-label">脚本&主题：</label>
+                                                        <select class="form-control"
+                                                                v-model="http.mockInfo.scriptType"
+                                                                @change="selectScripteVal" >
+                                                            <option value="" selected>请选择脚本类型</option>
+                                                            <template v-for="option in AceEdtiorDics.scriptType">
+                                                                <option v-bind:value="option.text" v-if="option.value == http.mockInfo.scriptType" selected>
+                                                                    {{ option.text }}
+                                                                </option>
+                                                                <option :value="option.text" v-else>
+                                                                    {{ option.text }}
+                                                                </option>
+                                                            </template>
+                                                        </select>
+                                                        <!--style="width: 150px;"-->
+                                                        <select  class="form-control"
+                                                                v-model="http.mockInfo.themeType" @change="selectThemeTypeVal">
+                                                            <option value="" selected>请选择主题</option>
+                                                            <template v-for="option in AceEdtiorDics.themeType">
+                                                                <option v-bind:value="option.text" v-if="option.value == http.mockInfo.themeType" selected>
+                                                                    {{ option.text }}
+                                                                </option>
+                                                                <option :value="option.text" v-else>
+                                                                    {{ option.text }}
+                                                                </option>
+                                                            </template>
+                                                        </select>
+
+                                                        <div class="col-xs-1  control-label">
+                                                      <!--  <input type="checkbox" v-model="http.mocked" value="true"
+                                                               style="zoom:180%;" />mock-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xs-12"></div>
+                                                <div class="col-xs-12">
+                                                    <div class="form-group">
+                                                        <!--代码输入框（注意请务必设置高度，否则无法显示）-->
+                                                        <pre id="code" class="ace_editor"
+                                                             style="min-height:300px;min-width: 400px">
+                                                        <textarea class="ace_text-input">
+                                                        </textarea>
+                                                         </pre>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript"
+            charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript"
+            charset="utf-8"></script>
+    <script src="http://cdn.bootcss.com/ace/1.2.4/ext-old_ie.js"></script>
+    <script src="/js/aceEditor.js"></script>
+    <script src="/js/apiShow.js?t=ddfff"></script>
+</footer>
+</body>
+</html>
