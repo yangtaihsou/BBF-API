@@ -3,7 +3,7 @@ import groovyx.net.http.HTTPBuilder
 import static groovyx.net.http.Method.GET
 import static groovyx.net.http.Method.POST
 def exe() {
-    def domain = 'https://shop-staff-beta.bitmain.com'
+    def domain = 'https://shop-staff-beta.badman.com'
     def http = new HTTPBuilder(domain+'/shop-admin/login?ref=toolbar')
     def headerMap = [:]
     http.request(POST, ContentType.URLENC) { req ->
@@ -64,7 +64,7 @@ def locationRequest(locationUrl,headerMap){
 
 
 def getShopAdminProductData(headerMap){
-    def http = new HTTPBuilder('https://shop-staff-beta.bitmain.com/shop-admin/product/data?type=0&page=1&pagesize=1')
+    def http = new HTTPBuilder('https://shop-staff-beta.badman.com/shop-admin/product/data?type=0&page=1&pagesize=1')
     http.request(POST, ContentType.JSON) {
         cookies = headerMap['cookie'];
         println cookies
@@ -80,7 +80,7 @@ def getShopAdminProductData(headerMap){
 
 
 def getShopAdminSubscription(headerMap){
-    def http = new HTTPBuilder('https://shop-staff-beta.bitmain.com/shop-admin/subscription/data?mty=&mrl=&page=1&pagesize=1')
+    def http = new HTTPBuilder('https://shop-staff-beta.batman.com/shop-admin/subscription/data?mty=&mrl=&page=1&pagesize=1')
     http.request(POST, ContentType.JSON) {
         cookies = headerMap['cookie'];
         println cookies

@@ -6,7 +6,7 @@ def  exe():
             headers = {"Content-type": "application/x-www-form-urlencoded"
                   , "Accept": "text/plain"}
 
-            httpClient = httplib.HTTPConnection("https://shop-staff-beta.bitmain.com", 80, timeout=30)
+            httpClient = httplib.HTTPConnection("https://shop-staff-beta.batman.com", 80, timeout=30)
             httpClient.request("GET", "//shop-admin/login?ref=toolbar", params, headers)
 
             response = httpClient.getresponse()
